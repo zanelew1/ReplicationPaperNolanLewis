@@ -1,0 +1,23 @@
+{
+\def\sym#1{\ifmmode^{#1}\else\(^{#1}\)\fi}
+\begin{tabular}{l*{8}{c}}
+\hline\hline
+                    &\multicolumn{1}{c}{(1)}&\multicolumn{1}{c}{(2)}&\multicolumn{1}{c}{(3)}&\multicolumn{1}{c}{(4)}&\multicolumn{1}{c}{(5)}&\multicolumn{1}{c}{(6)}&\multicolumn{1}{c}{(7)}&\multicolumn{1}{c}{(8)}\\
+                    &\multicolumn{1}{c}{ log(msa emp03)-log(msa emp83)}&\multicolumn{1}{c}{ log(msa emp03)-log(msa emp83)}&\multicolumn{1}{c}{ log(msa emp03)-log(msa emp83)}&\multicolumn{1}{c}{ log(msa emp03)-log(msa emp83)}&\multicolumn{1}{c}{ log(msa emp03)-log(msa emp83)}&\multicolumn{1}{c}{ log(msa emp03)-log(msa emp83)}&\multicolumn{1}{c}{ log(msa emp03)-log(msa emp83)}&\multicolumn{1}{c}{ log(msa pop 00)-log(msa pop 80)}\\
+\hline
+ log(msa 1983 IH km)&      0.0727\sym{***}&      0.0744\sym{***}&      0.0607\sym{***}&      0.0600\sym{***}&      0.0422\sym{***}&      0.0305\sym{**} &                     &      0.0559\sym{***}\\
+                    &      (4.20)         &      (5.63)         &      (4.44)         &      (4.16)         &      (3.10)         &      (2.01)         &                     &      (4.11)         \\
+[1em]
+ log(employment 1983)&     -0.0861\sym{***}&      -0.239         &      -0.258         &      -0.263         &      -0.258         &      -0.254         &      -0.272         &       0.260\sym{***}\\
+                    &     (-4.28)         &     (-1.24)         &     (-1.34)         &     (-1.36)         &     (-1.19)         &     (-1.12)         &     (-1.44)         &      (3.37)         \\
+[1em]
+ log(1980 USGC map road km)&                     &                     &                     &                     &                     &                     &       0.174\sym{***}&                     \\
+                    &                     &                     &                     &                     &                     &                     &      (5.73)         &                     \\
+\hline
+Observations        &         227         &         227         &         227         &         227         &         227         &         227         &         227         &         227         \\
+\(R^{2}\)           &       0.115         &       0.434         &       0.467         &       0.476         &       0.528         &       0.587         &       0.459         &       0.644         \\
+\hline\hline
+\multicolumn{9}{l}{\footnotesize \textit{t} statistics in parentheses}\\
+\multicolumn{9}{l}{\footnotesize \sym{*} \(p<0.10\), \sym{**} \(p<0.05\), \sym{***} \(p<0.01\)}\\
+\end{tabular}
+}
