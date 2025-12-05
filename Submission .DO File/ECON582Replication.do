@@ -6,7 +6,7 @@
 
 clear all
 
-global route "/Users/connorlewis_macbookpro/Desktop/ReplicationPaperNolanLewis"
+global route "/Users/joeynolan/Desktop/ECON 582/ReplicationPaperNolanLewis"
 set matsize 800
 set memory 200m
 set more 1
@@ -515,7 +515,7 @@ esttab IV1A IV2A IV3A IV4A IV5A IV6A IV7A IV8A ///
 		varlabels(l_rd_km_IH_83 "ln(Int. Hwy km_{83})" l_emp83 "ln(Emp_{83})" l_road1980 "ln(USGS maj. roads_{80})")
 
 ***Panel B
-esttab TABLE2BC1 TABLE2BC2 TABLE2BC3 TABLE2BC4 TABLE2BC5 TABLE2BC6 TABLE2BC7 ///
+esttab IV1B IV2B IV3B IV4B IV5B IV6B IV7B ///
 	using "$route/tables/table3IV.tex", append keep(l_rd_km_IH_83 l_emp83 l_road1980) ///
 	`gops' nomtitles nonumber varlabels(l_rd_km_IH_83 "ln(Int. Hwy km_{83})" l_emp83 "ln(Emp_{83})" l_road1980 "ln(USGS maj. roads_{80})") ///
 	posthead(`postheadB')
@@ -885,19 +885,19 @@ local road "rd_km_IH_83"
 
 
 ***SOUTH
-ivreg2  `depvar' l_emp83 $population (l_`road' = l_hwy1947 l_rail1898 l_pix_pre1850) if `road'>0 & region_dmy3==1, robust
+ivreg2  `depvar' l_emp83 $population $geography (l_`road' = l_hwy1947 l_rail1898 l_pix_pre1850) if `road'>0 & region_dmy3==1, robust
 eststo Southemp
 
 ***Midwest
-ivreg2  `depvar' l_emp83 $population (l_`road' = l_hwy1947 l_rail1898 l_pix_pre1850) if `road'>0 & region_dmy1==1, robust
+ivreg2  `depvar' l_emp83 $population $geography (l_`road' = l_hwy1947 l_rail1898 l_pix_pre1850) if `road'>0 & region_dmy1==1, robust
 eststo MWemp
 
 ***Northeast
-ivreg2  `depvar' l_emp83 $population (l_`road' = l_hwy1947 l_rail1898 l_pix_pre1850) if `road'>0 & region_dmy2==1, robust
+ivreg2  `depvar' l_emp83 $population $geography (l_`road' = l_hwy1947 l_rail1898 l_pix_pre1850) if `road'>0 & region_dmy2==1, robust
 eststo NEemp
 
 ***West
-ivreg2  `depvar' l_emp83 $population (l_`road' = l_hwy1947 l_rail1898 l_pix_pre1850) if `road'>0 & region_dmy4==1, robust
+ivreg2  `depvar' l_emp83 $population $geography (l_`road' = l_hwy1947 l_rail1898 l_pix_pre1850) if `road'>0 & region_dmy4==1, robust
 eststo Westemp
 
 esttab Southemp MWemp NEemp Westemp using "$route/tables/Employmentextension.tex", replace keep (l_rd_km_IH_83 l_emp83) label star(* 0.10 ** 0.05 *** 0.01) r2 nonumber
