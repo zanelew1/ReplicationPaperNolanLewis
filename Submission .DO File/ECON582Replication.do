@@ -1,11 +1,12 @@
-********************************************************************************
-********************** Replication Paper ***************************************
-********************************************************************************
+****************
+*** ECON 582 Replication Study
+*** Joey Nolan and Connor Lewis
+*** 5DEC25
+****************
 
 clear all
 
-global route "/Users/joeynolan/Desktop/ECON 582/ReplicationPaperNolanLewis"
-
+global route "/Users/connorlewis_macbookpro/Desktop/ReplicationPaperNolanLewis"
 set matsize 800
 set memory 200m
 set more 1
@@ -144,7 +145,7 @@ road1980 rd_km_IH_83 rd_km_IH_03 l_rd_km_IH_83 ///
 	S_somecollege_80 S_poor_80 Smanuf77 ///
 	hwy1947 rail1898 pix_pre1850
 	
-esttab using "$route/tables/sumtab.tex", cells("mean sd")  
+esttab using "$route/tables/sumtab.tex", replace cells("mean sd")  
 ******************************* TABLE 2 ****************************************
 ****** OLS RESULTS
 ****** NOTE: LISTED AS TABLE 3 IN AUTHORS CODE
@@ -259,16 +260,22 @@ reg Dl_pop00 l_`road' l_emp83   $population if `road2'>0, robust
 eststo TABLE2AC8
 
 ***** MAKE TABLE
-local gops      b(2) se(2) noconstant ///
-                starlevel(* 0.10 ** 0.05 *** 0.01) staraux ///
-                fragment booktabs
+local gops      noconstant star(* 0.10 ** 0.05 *** 0.01) /// general options same for each panel
+				fragment booktabs se r2 compress b(%5.3f) se(%5.3f)
 
 //---PANEL A---//
 //Latex code - different for each panel
 local preheadA  "\begin{tabular}{l*{@M}{c}} \hline" //only need in first panel
 local postheadA "\hline \multicolumn{@span}{l}{\textbf{Panel A: Employment or Population Growth}} \\"
 
-esttab TABLE2AC1 TABLE2AC2 TABLE2AC3 TABLE2AC4 TABLE2AC5 TABLE2AC6 TABLE2AC7 TABLE2AC8 using "$route/tables/table3esttab.tex", replace `gops' nonumber prehead(`preheadA') posthead(`postheadA') keep (l_rd_km_IH_83 l_emp83 l_road1980) 
+*****OLS Output Redo:
+esttab TABLE2AC1 TABLE2AC2 TABLE2AC3 TABLE2AC4 TABLE2AC5 TABLE2AC6 TABLE2AC7 TABLE2AC8 ///
+		using "$route/tables/table2.tex", replace `gops' nomtitles ///
+		prehead(`preheadA') posthead(`postheadA') ///
+		keep(l_rd_km_IH_83 l_emp83 l_road1980) ///
+		varlabels(l_rd_km_IH_83 "ln(Int. Hwy km_{83})" l_emp83 "ln(Emp_{83})" l_road1980 "ln(USGS maj. roads_{80})")
+
+*** Issues with this table output **** esttab TABLE2AC1 TABLE2AC2 TABLE2AC3 TABLE2AC4 TABLE2AC5 TABLE2AC6 TABLE2AC7 TABLE2AC8 using "$route/tables/table3esttab.tex", replace `gops' nonumber prehead(`preheadA') posthead(`postheadA') keep (l_rd_km_IH_83 l_emp83 l_road1980) 
 
 *esttab TABLE2AC1 TABLE2AC2 TABLE2AC3 TABLE2AC4 TABLE2AC5 TABLE2AC6 TABLE2AC7 TABLE2AC8 using "$route/tables/table3esttab.tex", replace keep (l_rd_km_IH_83 l_emp83 l_road1980) posthead("Panel A") label star(* 0.10 ** 0.05 *** 0.01) r2 nomtitle
 
@@ -300,9 +307,16 @@ reg `depvar' l_road1980 l_emp83 $population if `road2'>0, robust
 eststo TABLE2BC7
 
 ***** ADD PANEL B TO TABLE
+*latex code
 local postheadB "\hline \multicolumn{@span}{l}{\textbf{Panel B: Road Growth}} \\"
 
-esttab TABLE2BC1 TABLE2BC2 TABLE2BC3 TABLE2BC4 TABLE2BC5 TABLE2BC6 TABLE2BC7 using "$route/tables/table3esttab.tex", append nonumber nomtitle posthead(`postheadB') keep (l_rd_km_IH_83 l_emp83 l_road1980) 
+*panel B Tabel 2 Output
+esttab TABLE2BC1 TABLE2BC2 TABLE2BC3 TABLE2BC4 TABLE2BC5 TABLE2BC6 TABLE2BC7 ///
+	using "$route/tables/table2.tex", append keep(l_rd_km_IH_83 l_emp83 l_road1980) ///
+	`gops' nomtitles nonumber varlabels(l_rd_km_IH_83 "ln(Int. Hwy km_{83})" l_emp83 "ln(Emp_{83})" l_road1980 "ln(USGS maj. roads_{80})") ///
+	posthead(`postheadB')
+
+*esttab TABLE2BC1 TABLE2BC2 TABLE2BC3 TABLE2BC4 TABLE2BC5 TABLE2BC6 TABLE2BC7 using "$route/tables/table3esttab.tex",  append `gops' nonumber nomtitle posthead(`postheadB') keep (l_rd_km_IH_83 l_emp83 l_road1980) 
 
 *esttab TABLE2BC1 TABLE2BC2 TABLE2BC3 TABLE2BC4 TABLE2BC5 TABLE2BC6 TABLE2BC7 using "$route/tables/table3esttab.tex", append keep (l_rd_km_IH_83 l_emp83 l_road1980) posthead("Panel B") label star(* 0.10 ** 0.05 *** 0.01) r2 nomtitle nonumber
 
@@ -325,28 +339,36 @@ local road "rd_km_IH_83"
 *keep if l_hwy1947>0
 
 ivreg2  `depvar' l_emp83 (l_`road' = l_hwy1947 l_rail1898 l_pix_pre1850) if `road'>0,liml  robust
-outreg2  l_`road' l_emp83 using "$route/tables/IVCONFIRMA.xls", ctitle(`depvar') `instruct'    replace
+*outreg2  l_`road' l_emp83 using "$route/tables/IVCONFIRMA.xls", ctitle(`depvar') `instruct'    replace
+*eststo IV1
 
 ivreg2  `depvar' l_emp83 $population (l_`road' = l_hwy1947 l_rail1898 l_pix_pre1850) if `road'>0,liml  robust
-outreg2  l_`road' l_emp83 using "$route/tables/IVCONFIRMA.xls", ctitle(`depvar') `instruct'    append
+*outreg2  l_`road' l_emp83 using "$route/tables/IVCONFIRMA.xls", ctitle(`depvar') `instruct'    append
+*eststo IV2
 
 ivreg2  `depvar' l_emp83 $population  $geography (l_`road' = l_hwy1947 l_rail1898 l_pix_pre1850) if `road'>0,liml  robust
-outreg2  l_`road' l_emp83 using "$route/tables/IVCONFIRMA.xls", ctitle(`depvar') `instruct'    append
+*outreg2  l_`road' l_emp83 using "$route/tables/IVCONFIRMA.xls", ctitle(`depvar') `instruct'    append
+*eststo IV3
 
 ivreg2  `depvar' l_emp83 $population $geography   $geography_ext (l_`road' = l_hwy1947 l_rail1898 l_pix_pre1850) if `road'>0,liml  robust
-outreg2  l_`road' l_emp83 using "$route/tables/IVCONFIRMA.xls", ctitle(`depvar') `instruct'    append
+*outreg2  l_`road' l_emp83 using "$route/tables/IVCONFIRMA.xls", ctitle(`depvar') `instruct'    append
+*eststo IV4
 
 ivreg2  `depvar' l_emp83 $population  $geography   $geography_ext $socioeco (l_`road' = l_hwy1947 l_rail1898 l_pix_pre1850) if `road'>0,liml  robust
-outreg2  l_`road' l_emp83 using "$route/tables/IVCONFIRMA.xls", ctitle(`depvar') `instruct'    append
+*outreg2  l_`road' l_emp83 using "$route/tables/IVCONFIRMA.xls", ctitle(`depvar') `instruct'    append
+*eststo IV5
 
 ivreg2  `depvar' l_emp83 $population  $geography   $geography_ext $socioeco $cen_div (l_`road' = l_hwy1947 l_rail1898 l_pix_pre1850)if `road'>0,liml  robust
-outreg2  l_`road' l_emp83 using "$route/tables/IVCONFIRMA.xls", ctitle(`depvar')  `instruct'    append
+*outreg2  l_`road' l_emp83 using "$route/tables/IVCONFIRMA.xls", ctitle(`depvar')  `instruct'    append
+*eststo IV6
 
 ivreg2  `depvar' l_emp83 $population (l_road1980 = l_hwy1947 l_rail1898 l_pix_pre1850) if `road'>0,liml  robust
-outreg2  l_road1980 l_emp83 using "$route/tables/IVCONFIRMA.xls", ctitle(`depvar') `instruct'    append
+*outreg2  l_road1980 l_emp83 using "$route/tables/IVCONFIRMA.xls", ctitle(`depvar') `instruct'    append
+*eststo IV7
 
 ivreg2  Dl_pop00 l_emp83 $population (l_`road' = l_hwy1947 l_rail1898 l_pix_pre1850) if `road'>0,liml  robust
-outreg2  l_`road' l_emp83 using "$route/tables/IVCONFIRMA.xls", ctitle(Dl_pop00) `instruct'    append
+*outreg2  l_`road' l_emp83 using "$route/tables/IVCONFIRMA.xls", ctitle(Dl_pop00) `instruct'    append
+*eststo IV8
 
 *log close
 
@@ -363,25 +385,25 @@ local depvar "Dl_rd_km_IH_03"
 local road "rd_km_IH_83"
 
 ivreg2  `depvar'  l_emp83 (l_`road' = l_hwy1947 l_rail1898 l_pix_pre1850) if `road'>0,liml  robust
-outreg2  l_`road' l_emp83 using "$route/tables/IVCONFIRMB.xls", ctitle(`depvar') `instruct'    replace
+*outregreg2  l_`road' l_emp83 using "$r*outrege/tables/IVCONFIRMB.xls", ctitle(`depvar') `instruct'    replace
 
 ivreg2  `depvar' l_emp83 $population (l_`road' = l_hwy1947 l_rail1898 l_pix_pre1850) if `road'>0,liml  robust
-outreg2  l_`road' l_emp83 using "$route/tables/IVCONFIRMB.xls", ctitle(`depvar') `instruct'    append
+*outregreg2  l_`road' l_emp83 using "$route/tables/IVCONFIRMB.xls", ctitle(`depvar') `instruct'    append
 
 ivreg2  `depvar' l_emp83 $population $geography (l_`road' = l_hwy1947 l_rail1898 l_pix_pre1850) if `road'>0,liml  robust
-outreg2  l_`road' l_emp83 using "$route/tables/IVCONFIRMB.xls", ctitle(`depvar') `instruct'    append
+*outreg2  l_`road' l_emp83 using "$route/tables/IVCONFIRMB.xls", ctitle(`depvar') `instruct'    append
 
 ivreg2  `depvar' l_emp83 $population $geography   $geography_ext (l_`road' = l_hwy1947 l_rail1898 l_pix_pre1850) if `road'>0,liml  robust
-outreg2  l_`road' l_emp83 using "$route/tables/IVCONFIRMB.xls", ctitle(`depvar') `instruct'    append
+*outreg2  l_`road' l_emp83 using "$route/tables/IVCONFIRMB.xls", ctitle(`depvar') `instruct'    append
 
 ivreg2  `depvar' l_emp83 $population  $geography   $geography_ext $socioeco (l_`road' = l_hwy1947 l_rail1898 l_pix_pre1850) if `road'>0,liml  robust
-outreg2  l_`road' l_emp83 using "$route/tables/IVCONFIRMB.xls", ctitle(`depvar') `instruct'    append
+*outreg2  l_`road' l_emp83 using "$route/tables/IVCONFIRMB.xls", ctitle(`depvar') `instruct'    append
 
 ivreg2  `depvar' l_emp83 $population  $geography   $geography_ext $socioeco $cen_div (l_`road' = l_hwy1947 l_rail1898 l_pix_pre1850) if `road'>0,liml  robust
-outreg2  l_`road' l_emp83 using "$route/tables/IVCONFIRMB.xls", ctitle(`depvar')  `instruct'    append
+*outreg2  l_`road' l_emp83 using "$route/tables/IVCONFIRMB.xls", ctitle(`depvar')  `instruct'    append
 
 ivreg2  `depvar' l_emp83 $population (l_road1980 = l_hwy1947 l_rail1898 l_pix_pre1850) if `road'>0,liml  robust
-outreg2  l_road1980 l_emp83 using "$route/tables/IVCONFIRMB.xls", ctitle(`depvar')  `instruct'    append
+*outreg2  l_road1980 l_emp83 using "$route/tables/IVCONFIRMB.xls", ctitle(`depvar')  `instruct'    append
 
 
 *log close
@@ -408,28 +430,36 @@ local road "rd_km_IH_83"
 *keep if l_hwy1947>0
 
 ivreg2  `depvar' l_emp83 (l_`road' = l_hwy1947 l_rail1898 l_pix_pre1850) if `road'>0,  robust
-outreg2  l_`road' l_emp83 using "$route/tables/ACTUALIVA.xls", ctitle(`depvar') `instruct'    replace
+*outreg2  l_`road' l_emp83 using "$route/tables/ACTUALIVA.xls", ctitle(`depvar') `instruct'    replace
+eststo IV1A
 
 ivreg2  `depvar' l_emp83 $population (l_`road' = l_hwy1947 l_rail1898 l_pix_pre1850) if `road'>0,  robust
-outreg2  l_`road' l_emp83 using "$route/tables/ACTUALIVA.xls", ctitle(`depvar') `instruct'    append
+*outreg2  l_`road' l_emp83 using "$route/tables/ACTUALIVA.xls", ctitle(`depvar') `instruct'    append
+eststo IV2A
 
 ivreg2  `depvar' l_emp83 $population  $geography (l_`road' = l_hwy1947 l_rail1898 l_pix_pre1850) if `road'>0,  robust
-outreg2  l_`road' l_emp83 using "$route/tables/ACTUALIVA.xls", ctitle(`depvar') `instruct'    append
+*outreg2  l_`road' l_emp83 using "$route/tables/ACTUALIVA.xls", ctitle(`depvar') `instruct'    append
+eststo IV3A
 
 ivreg2  `depvar' l_emp83 $population $geography   $geography_ext (l_`road' = l_hwy1947 l_rail1898 l_pix_pre1850) if `road'>0,  robust
-outreg2  l_`road' l_emp83 using "$route/tables/ACTUALIVA.xls", ctitle(`depvar') `instruct'    append
+*outreg2  l_`road' l_emp83 using "$route/tables/ACTUALIVA.xls", ctitle(`depvar') `instruct'    append
+eststo IV4A
 
 ivreg2  `depvar' l_emp83 $population  $geography   $geography_ext $socioeco (l_`road' = l_hwy1947 l_rail1898 l_pix_pre1850) if `road'>0,  robust
-outreg2  l_`road' l_emp83 using "$route/tables/ACTUALIVA.xls", ctitle(`depvar') `instruct'    append
+*outreg2  l_`road' l_emp83 using "$route/tables/ACTUALIVA.xls", ctitle(`depvar') `instruct'    append
+eststo IV5A
 
 ivreg2  `depvar' l_emp83 $population  $geography   $geography_ext $socioeco $cen_div  (l_`road' = l_hwy1947 l_rail1898 l_pix_pre1850) if `road'>0,  robust
-outreg2  l_`road' l_emp83 using "$route/tables/ACTUALIVA.xls", ctitle(`depvar')  `instruct'    append
+*outreg2  l_`road' l_emp83 using "$route/tables/ACTUALIVA.xls", ctitle(`depvar')  `instruct'    append
+eststo IV6A
 
 ivreg2  `depvar' l_emp83 $population (l_road1980 = l_hwy1947 l_rail1898 l_pix_pre1850) if `road'>0,  robust
-outreg2  l_road1980 l_emp83 using "$route/tables/ACTUALIVA.xls", ctitle(`depvar') `instruct'    append
+*outreg2  l_road1980 l_emp83 using "$route/tables/ACTUALIVA.xls", ctitle(`depvar') `instruct'    append
+eststo IV7A
 
 ivreg2  Dl_pop00 l_emp83 $population (l_`road' = l_hwy1947 l_rail1898 l_pix_pre1850) if `road'>0,  robust
-outreg2  l_`road' l_emp83 using "$route/tables/ACTUALIVA.xls", ctitle(Dl_pop00) `instruct'    append
+*outreg2  l_`road' l_emp83 using "$route/tables/ACTUALIVA.xls", ctitle(Dl_pop00) `instruct'    append
+eststo IV8A
 
 *log close
 
@@ -444,26 +474,51 @@ local depvar "Dl_rd_km_IH_03"
 local road "rd_km_IH_83"
 
 ivreg2  `depvar'  l_emp83 (l_`road' = l_hwy1947 l_rail1898 l_pix_pre1850) if `road'>0,  robust
-outreg2  l_`road' l_emp83 using "$route/tables/ACTUALIVB.xls", ctitle(`depvar') `instruct'    replace
+*outreg2  l_`road' l_emp83 using "$route/tables/ACTUALIVB.xls", ctitle(`depvar') `instruct'    replace
+eststo IV1B
+
 
 ivreg2  `depvar' l_emp83 $population (l_`road' = l_hwy1947 l_rail1898 l_pix_pre1850) if `road'>0,  robust
-outreg2  l_`road' l_emp83 using "$route/tables/ACTUALIVB.xls", ctitle(`depvar') `instruct'    append
+*outreg2  l_`road' l_emp83 using "$route/tables/ACTUALIVB.xls", ctitle(`depvar') `instruct'    append
+eststo IV2B
+
 
 ivreg2  `depvar' l_emp83 $population $geography (l_`road' = l_hwy1947 l_rail1898 l_pix_pre1850) if `road'>0,  robust
-outreg2  l_`road' l_emp83 using "$route/tables/ACTUALIVB.xls", ctitle(`depvar') `instruct'    append
+*outreg2  l_`road' l_emp83 using "$route/tables/ACTUALIVB.xls", ctitle(`depvar') `instruct'    append
+eststo IV3B
+
 
 ivreg2  `depvar' l_emp83 $population $geography $geography_ext  (l_`road' = l_hwy1947 l_rail1898 l_pix_pre1850) if `road'>0,  robust
-outreg2  l_`road' l_emp83 using "$route/tables/ACTUALIVB.xls", ctitle(`depvar') `instruct'    append
+*outreg2  l_`road' l_emp83 using "$route/tables/ACTUALIVB.xls", ctitle(`depvar') `instruct'    append
+eststo IV4B
+
 
 ivreg2  `depvar' l_emp83 $population  $geography   $geography_ext $socioeco (l_`road' = l_hwy1947 l_rail1898 l_pix_pre1850) if `road'>0,  robust
-outreg2  l_`road' l_emp83 using "$route/tables/ACTUALIVB.xls", ctitle(`depvar') `instruct'    append
+*outreg2  l_`road' l_emp83 using "$route/tables/ACTUALIVB.xls", ctitle(`depvar') `instruct'    append
+eststo IV5B
+
 
 ivreg2  `depvar' l_emp83 $population  $geography   $geography_ext $socioeco $cen_div (l_`road' = l_hwy1947 l_rail1898 l_pix_pre1850) if `road'>0,  robust
-outreg2  l_`road' l_emp83 using "$route/tables/ACTUALIVB.xls", ctitle(`depvar')  `instruct'    append
+*outreg2  l_`road' l_emp83 using "$route/tables/ACTUALIVB.xls", ctitle(`depvar')  `instruct'    append
+eststo IV6B
 
 ivreg2  `depvar' l_emp83 $population (l_road1980 = l_hwy1947 l_rail1898 l_pix_pre1850) if `road'>0,  robust
-outreg2  l_road1980 l_emp83 using "$route/tables/ACTUALIVB.xls", ctitle(`depvar')  `instruct'    append
+*outreg2  l_road1980 l_emp83 using "$route/tables/ACTUALIVB.xls", ctitle(`depvar')  `instruct'    append
+eststo IV7B
 
+****Make Table 4 IV
+*** Panel A
+esttab IV1A IV2A IV3A IV4A IV5A IV6A IV7A IV8A ///
+		using "$route/tables/table3IV.tex", replace `gops' nomtitles ///
+		prehead(`preheadA') posthead(`postheadA') ///
+		keep(l_rd_km_IH_83 l_emp83 l_road1980) ///
+		varlabels(l_rd_km_IH_83 "ln(Int. Hwy km_{83})" l_emp83 "ln(Emp_{83})" l_road1980 "ln(USGS maj. roads_{80})")
+
+***Panel B
+esttab TABLE2BC1 TABLE2BC2 TABLE2BC3 TABLE2BC4 TABLE2BC5 TABLE2BC6 TABLE2BC7 ///
+	using "$route/tables/table3IV.tex", append keep(l_rd_km_IH_83 l_emp83 l_road1980) ///
+	`gops' nomtitles nonumber varlabels(l_rd_km_IH_83 "ln(Int. Hwy km_{83})" l_emp83 "ln(Emp_{83})" l_road1980 "ln(USGS maj. roads_{80})") ///
+	posthead(`postheadB')
 
 *log close
 
