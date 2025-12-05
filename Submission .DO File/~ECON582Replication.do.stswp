@@ -135,6 +135,16 @@ pwcorr l_rd_km_IH_83 l_hwy1947 l_rail1898 l_pix_pre1850
 *************************************************************************************
 *************************************************************************************
 
+************************ MAKE SUMMARY TABLE ************************************
+estpost sum emp83 emp03 emp_g03 pop80 pop00 pop_g00 l_emp83 Dl_emp03 ///
+road1980 rd_km_IH_83 rd_km_IH_03 l_rd_km_IH_83 ///
+	rd_km_IH_83pc rd_km_IH_03pc ///
+	max_84bus bus_pc  ///
+	pc_aquifer_msa elevat_range_msa ruggedness_msa cooling_dd heating_dd ///
+	S_somecollege_80 S_poor_80 Smanuf77 ///
+	hwy1947 rail1898 pix_pre1850
+	
+esttab using "$route/tables/sumtab.tex", cells("mean sd")  
 ******************************* TABLE 2 ****************************************
 ****** OLS RESULTS
 ****** NOTE: LISTED AS TABLE 3 IN AUTHORS CODE
@@ -152,28 +162,28 @@ local road2 "rd_km_IH_83"
 local instruct "tex(pr) tdec(2) rdec(2) auto(2) symbol($^a$,$^b$,$^c$) se "
 
 reg `depvar' l_`road' l_emp83 if `road2'>0, robust
-outreg2 l_`road' l_emp83 using "$route/tables/table3author.xls", ctitle(`depvar')  `instruct'   replace
+outreg2 l_`road' l_emp83 using "$route/tables/table3author.tex", ctitle(`depvar')  `instruct'   replace
 
 reg `depvar' l_`road' l_emp83   $population if `road2'>0, robust
-outreg2 l_`road' l_emp83 using "$route/tables/table3author.xls", ctitle(`depvar')  `instruct'   append
+outreg2 l_`road' l_emp83 using "$route/tables/table3author.tex", ctitle(`depvar')  `instruct'   append
 
 reg `depvar' l_`road' l_emp83  $population  $geography if `road2'>0, robust
-outreg2 l_`road' l_emp83 using "$route/tables/table3author.xls", ctitle(`depvar')  `instruct'   append
+outreg2 l_`road' l_emp83 using "$route/tables/table3author.tex", ctitle(`depvar')  `instruct'   append
 
 reg `depvar' l_`road' l_emp83   $population  $geography   $geography_ext if `road2'>0, robust
-outreg2 l_`road' l_emp83 using "$route/tables/table3author.xls", ctitle(`depvar')  `instruct'   append
+outreg2 l_`road' l_emp83 using "$route/tables/table3author.tex", ctitle(`depvar')  `instruct'   append
 
 reg `depvar' l_`road' l_emp83   $population   $geography   $geography_ext $socioeco  if `road2'>0, robust
-outreg2 l_`road' l_emp83 using "$route/tables/table3author.xls", ctitle(`depvar')  `instruct'  append
+outreg2 l_`road' l_emp83 using "$route/tables/table3author.tex", ctitle(`depvar')  `instruct'  append
 
 reg `depvar' l_`road' l_emp83   $population  $geography   $geography_ext $socioeco $cen_div  if `road2'>0, robust
-outreg2 l_`road' l_emp83 using "$route/tables/table3author.xls", ctitle(`depvar')  `instruct'   append
+outreg2 l_`road' l_emp83 using "$route/tables/table3author.tex", ctitle(`depvar')  `instruct'   append
 
 reg `depvar' l_road1980 l_emp83   $population if `road2'>0, robust
-outreg2 l_road1980  l_emp83 using "$route/tables/table3author.xls", ctitle(`depvar')  `instruct'   append
+outreg2 l_road1980  l_emp83 using "$route/tables/table3author.tex", ctitle(`depvar')  `instruct'   append
 
 reg Dl_pop00 l_`road' l_emp83   $population if `road2'>0, robust
-outreg2 l_`road' l_emp83 using "$route/tables/table3author.xls", ctitle(Dl_pop00)  `instruct'   append
+outreg2 l_`road' l_emp83 using "$route/tables/table3author.tex", ctitle(Dl_pop00)  `instruct'   append
 
 *log close
 }
@@ -189,25 +199,25 @@ local instruct "tex(pr) tdec(2) rdec(2) auto(2) symbol($^a$,$^b$,$^c$) se "
 *local instruct2 "tex(pr) tdec(2) rdec(2) auto(2) symbol($^a$,$^b$,$^c$) se addstat(Overid,e(jp),First stage F, e(widstat))"
 
 reg `depvar' l_`road' l_emp83 if `road2'>0, robust
-outreg2 l_`road' l_emp83  using  "$route/tables/table3Bauthor.xls", ctitle(`depvar')  `instruct'   replace
+outreg2 l_`road' l_emp83  using  "$route/tables/table3author.tex", ctitle(`depvar')  `instruct'   append
 
 reg `depvar' l_`road' l_emp83    $population if `road2'>0, robust
-outreg2 l_`road' l_emp83 using "$route/tables/table3Bauthor.xls", ctitle(`depvar')  `instruct'   append
+outreg2 l_`road' l_emp83 using "$route/tables/table3author.tex", ctitle(`depvar')  `instruct'   append
 
 reg `depvar' l_`road' l_emp83  $population  $geography if `road2'>0, robust
-outreg2 l_`road' l_emp83 using "$route/tables/table3Bauthor.xls", ctitle(`depvar')  `instruct'   append
+outreg2 l_`road' l_emp83 using "$route/tables/table3author.tex", ctitle(`depvar')  `instruct'   append
 
 reg `depvar' l_`road' l_emp83   $population  $geography   $geography_ext if `road2'>0, robust
-outreg2 l_`road' l_emp83 using "$route/tables/table3Bauthor.xls", ctitle(`depvar')  `instruct'   append
+outreg2 l_`road' l_emp83 using "$route/tables/table3author.tex", ctitle(`depvar')  `instruct'   append
 
 reg `depvar' l_`road' l_emp83   $population   $geography   $geography_ext $socioeco  if `road2'>0, robust
-outreg2 l_`road' l_emp83 using "$route/tables/table3Bauthor.xls", ctitle(`depvar')  `instruct'  append
+outreg2 l_`road' l_emp83 using "$route/tables/table3author.tex", ctitle(`depvar')  `instruct'  append
 
 reg `depvar' l_`road' l_emp83   $population  $geography   $geography_ext $socioeco $cen_div  if `road2'>0, robust
-outreg2 l_`road' l_emp83 using "$route/tables/table3Bauthor.xls", ctitle(`depvar')  `instruct'   append
+outreg2 l_`road' l_emp83 using "$route/tables/table3author.tex", ctitle(`depvar')  `instruct'   append
 
 reg `depvar' l_road1980 l_emp83 $population if `road2'>0, robust
-outreg2 l_road1980  l_emp83  using "$route/tables/table3Bauthor.xls", ctitle(`depvar')  `instruct'   append
+outreg2 l_road1980  l_emp83  using "$route/tables/table3author.tex", ctitle(`depvar')  `instruct'   append
 
 
 *log close
@@ -248,9 +258,20 @@ eststo TABLE2AC7
 reg Dl_pop00 l_`road' l_emp83   $population if `road2'>0, robust
 eststo TABLE2AC8
 
-esttab TABLE2AC1 TABLE2AC2 TABLE2AC3 TABLE2AC4 TABLE2AC5 TABLE2AC6 TABLE2AC7 TABLE2AC8 using "$route/tables/table3esttab.tex", replace keep (l_rd_km_IH_83 l_emp83 l_road1980) label star(* 0.10 ** 0.05 *** 0.01) r2
+***** MAKE TABLE
+local gops      b(2) se(2) noconstant ///
+                starlevel(* 0.10 ** 0.05 *** 0.01) staraux ///
+                fragment booktabs
 
-eststo clear
+//---PANEL A---//
+//Latex code - different for each panel
+local preheadA  "\begin{tabular}{l*{@M}{c}} \hline" //only need in first panel
+local postheadA "\hline \multicolumn{@span}{l}{\textbf{Panel A: Employment or Population Growth}} \\"
+
+esttab TABLE2AC1 TABLE2AC2 TABLE2AC3 TABLE2AC4 TABLE2AC5 TABLE2AC6 TABLE2AC7 TABLE2AC8 using "$route/tables/table3esttab.tex", replace `gops' nonumber prehead(`preheadA') posthead(`postheadA') keep (l_rd_km_IH_83 l_emp83 l_road1980) 
+
+*esttab TABLE2AC1 TABLE2AC2 TABLE2AC3 TABLE2AC4 TABLE2AC5 TABLE2AC6 TABLE2AC7 TABLE2AC8 using "$route/tables/table3esttab.tex", replace keep (l_rd_km_IH_83 l_emp83 l_road1980) posthead("Panel A") label star(* 0.10 ** 0.05 *** 0.01) r2 nomtitle
+
 ****** PANEL B
 local road "rd_km_IH_83"
 local road2 "rd_km_IH_83"
@@ -278,7 +299,12 @@ eststo TABLE2BC6
 reg `depvar' l_road1980 l_emp83 $population if `road2'>0, robust
 eststo TABLE2BC7
 
-esttab TABLE2BC1 TABLE2BC2 TABLE2BC3 TABLE2BC4 TABLE2BC5 TABLE2BC6 TABLE2BC7 using "$route/tables/table3Besttab.tex", replace keep (l_rd_km_IH_83 l_emp83 l_road1980) label star(* 0.10 ** 0.05 *** 0.01) r2
+***** ADD PANEL B TO TABLE
+local postheadB "\hline \multicolumn{@span}{l}{\textbf{Panel B: Road Growth}} \\"
+
+esttab TABLE2BC1 TABLE2BC2 TABLE2BC3 TABLE2BC4 TABLE2BC5 TABLE2BC6 TABLE2BC7 using "$route/tables/table3esttab.tex", append nonumber nomtitle posthead(`postheadB') keep (l_rd_km_IH_83 l_emp83 l_road1980) 
+
+*esttab TABLE2BC1 TABLE2BC2 TABLE2BC3 TABLE2BC4 TABLE2BC5 TABLE2BC6 TABLE2BC7 using "$route/tables/table3esttab.tex", append keep (l_rd_km_IH_83 l_emp83 l_road1980) posthead("Panel B") label star(* 0.10 ** 0.05 *** 0.01) r2 nomtitle nonumber
 
 
 ****************************** TABLE 3 *****************************************
@@ -451,11 +477,13 @@ outreg2  l_road1980 l_emp83 using "$route/tables/ACTUALIVB.xls", ctitle(`depvar'
 ********************************************************************************
 
 ********* BRING IN REGIONAL DATA
+clear 
+
 import excel "$route/Data/replication_region_add_on.xlsx", sheet("Sheet1") firstrow
 
 rename RegionBasedonLocationofMSA Region
 
-save "$route/Data/Regional_MSA.dta"
+save "$route/Data/Regional_MSA.dta", replace
 
 clear
 
@@ -490,29 +518,29 @@ local road "rd_km_IH_83"
 
 *keep if l_hwy1947>0
 
-ivreg2  `depvar' l_emp83 (l_`road' = l_hwy1947 l_rail1898 l_pix_pre1850) if `road'>0 & region_dmy3==1,  robust
-outreg2  l_`road' l_emp83 using "$route/tables/SOUTHIVA.xls", ctitle(`depvar') `instruct'    replace
+*ivreg2  `depvar' l_emp83 (l_`road' = l_hwy1947 l_rail1898 l_pix_pre1850) if `road'>0 & region_dmy3==1,  robust
+*outreg2  l_`road' l_emp83 using "$route/tables/SOUTHIVA.xls", ctitle(`depvar') `instruct'    replace
 
-ivreg2  `depvar' l_emp83 $population (l_`road' = l_hwy1947 l_rail1898 l_pix_pre1850) if `road'>0 & region_dmy3==1, robust
-outreg2  l_`road' l_emp83 using "$route/tables/SOUTHIVA.xls", ctitle(`depvar') `instruct'    append
+*ivreg2  `depvar' l_emp83 $population (l_`road' = l_hwy1947 l_rail1898 l_pix_pre1850) if `road'>0 & region_dmy3==1, robust
+*outreg2  l_`road' l_emp83 using "$route/tables/SOUTHIVA.xls", ctitle(`depvar') `instruct'    append
 
-ivreg2  `depvar' l_emp83 $population  $geography (l_`road' = l_hwy1947 l_rail1898 l_pix_pre1850) if `road'>0 & region_dmy3==1, robust
-outreg2  l_`road' l_emp83 using "$route/tables/SOUTHIVA.xls", ctitle(`depvar') `instruct'    append
+*ivreg2  `depvar' l_emp83 $population  $geography (l_`road' = l_hwy1947 l_rail1898 l_pix_pre1850) if `road'>0 & region_dmy3==1, robust
+*outreg2  l_`road' l_emp83 using "$route/tables/SOUTHIVA.xls", ctitle(`depvar') `instruct'    append
 
-ivreg2  `depvar' l_emp83 $population $geography   $geography_ext (l_`road' = l_hwy1947 l_rail1898 l_pix_pre1850) if `road'>0 & region_dmy3==1,  robust
-outreg2  l_`road' l_emp83 using "$route/tables/SOUTHIVA.xls", ctitle(`depvar') `instruct'    append
+*ivreg2  `depvar' l_emp83 $population $geography   $geography_ext (l_`road' = l_hwy1947 l_rail1898 l_pix_pre1850) if `road'>0 & region_dmy3==1,  robust
+*outreg2  l_`road' l_emp83 using "$route/tables/SOUTHIVA.xls", ctitle(`depvar') `instruct'    append
 
-ivreg2  `depvar' l_emp83 $population  $geography   $geography_ext $socioeco (l_`road' = l_hwy1947 l_rail1898 l_pix_pre1850) if `road'>0 & region_dmy3==1,  robust
-outreg2  l_`road' l_emp83 using "$route/tables/SOUTHIVA.xls", ctitle(`depvar') `instruct'    append
+*ivreg2  `depvar' l_emp83 $population  $geography   $geography_ext $socioeco (l_`road' = l_hwy1947 l_rail1898 l_pix_pre1850) if `road'>0 & region_dmy3==1,  robust
+*outreg2  l_`road' l_emp83 using "$route/tables/SOUTHIVA.xls", ctitle(`depvar') `instruct'    append
 
-ivreg2  `depvar' l_emp83 $population  $geography   $geography_ext $socioeco $cen_div  (l_`road' = l_hwy1947 l_rail1898 l_pix_pre1850) if `road'>0 & region_dmy3==1,  robust
-outreg2  l_`road' l_emp83 using "$route/tables/SOUTHIVA.xls", ctitle(`depvar')  `instruct'    append
+*ivreg2  `depvar' l_emp83 $population  $geography   $geography_ext $socioeco $cen_div  (l_`road' = l_hwy1947 l_rail1898 l_pix_pre1850) if `road'>0 & region_dmy3==1,  robust
+*outreg2  l_`road' l_emp83 using "$route/tables/SOUTHIVA.xls", ctitle(`depvar')  `instruct'    append
 
-ivreg2  `depvar' l_emp83 $population (l_road1980 = l_hwy1947 l_rail1898 l_pix_pre1850) if `road'>0 & region_dmy3==1,  robust
-outreg2  l_road1980 l_emp83 using "$route/tables/SOUTHIVA.xls", ctitle(`depvar') `instruct'    append
+*ivreg2  `depvar' l_emp83 $population (l_road1980 = l_hwy1947 l_rail1898 l_pix_pre1850) if `road'>0 & region_dmy3==1,  robust
+*outreg2  l_road1980 l_emp83 using "$route/tables/SOUTHIVA.xls", ctitle(`depvar') `instruct'    append
 
-ivreg2  Dl_pop00 l_emp83 $population (l_`road' = l_hwy1947 l_rail1898 l_pix_pre1850) if `road'>0 & region_dmy3==1,  robust
-outreg2  l_`road' l_emp83 using "$route/tables/SOUTHIVA.xls", ctitle(Dl_pop00) `instruct'    append
+*ivreg2  Dl_pop00 l_emp83 $population (l_`road' = l_hwy1947 l_rail1898 l_pix_pre1850) if `road'>0 & region_dmy3==1,  robust
+*outreg2  l_`road' l_emp83 using "$route/tables/SOUTHIVA.xls", ctitle(Dl_pop00) `instruct'    append
 
 *log close
 
@@ -526,26 +554,26 @@ local instruct "tex(pr) tdec(2) rdec(2) auto(2) symbol($^a$,$^b$,$^c$) se addsta
 local depvar "Dl_rd_km_IH_03"
 local road "rd_km_IH_83"
 
-ivreg2  `depvar'  l_emp83 (l_`road' = l_hwy1947 l_rail1898 l_pix_pre1850) if `road'>0 & region_dmy3==1,  robust
-outreg2  l_`road' l_emp83 using "$route/tables/SOUTHIVB.xls", ctitle(`depvar') `instruct'    replace
+*ivreg2  `depvar'  l_emp83 (l_`road' = l_hwy1947 l_rail1898 l_pix_pre1850) if `road'>0 & region_dmy3==1,  robust
+*outreg2  l_`road' l_emp83 using "$route/tables/SOUTHIVB.xls", ctitle(`depvar') `instruct'    replace
 
-ivreg2  `depvar' l_emp83 $population (l_`road' = l_hwy1947 l_rail1898 l_pix_pre1850) if `road'>0 & region_dmy3==1,  robust
-outreg2  l_`road' l_emp83 using "$route/tables/SOUTHIVB.xls", ctitle(`depvar') `instruct'    append
+*ivreg2  `depvar' l_emp83 $population (l_`road' = l_hwy1947 l_rail1898 l_pix_pre1850) if `road'>0 & region_dmy3==1,  robust
+*outreg2  l_`road' l_emp83 using "$route/tables/SOUTHIVB.xls", ctitle(`depvar') `instruct'    append
 
-ivreg2  `depvar' l_emp83 $population $geography (l_`road' = l_hwy1947 l_rail1898 l_pix_pre1850) if `road'>0 & region_dmy3==1,  robust
-outreg2  l_`road' l_emp83 using "$route/tables/SOUTHIVB.xls", ctitle(`depvar') `instruct'    append
+*ivreg2  `depvar' l_emp83 $population $geography (l_`road' = l_hwy1947 l_rail1898 l_pix_pre1850) if `road'>0 & region_dmy3==1,  robust
+*outreg2  l_`road' l_emp83 using "$route/tables/SOUTHIVB.xls", ctitle(`depvar') `instruct'    append
 
-ivreg2  `depvar' l_emp83 $population $geography $geography_ext  (l_`road' = l_hwy1947 l_rail1898 l_pix_pre1850) if `road'>0 & region_dmy3==1,  robust
-outreg2  l_`road' l_emp83 using "$route/tables/SOUTHIVB.xls", ctitle(`depvar') `instruct'    append
+*ivreg2  `depvar' l_emp83 $population $geography $geography_ext  (l_`road' = l_hwy1947 l_rail1898 l_pix_pre1850) if `road'>0 & region_dmy3==1,  robust
+*outreg2  l_`road' l_emp83 using "$route/tables/SOUTHIVB.xls", ctitle(`depvar') `instruct'    append
 
-ivreg2  `depvar' l_emp83 $population  $geography   $geography_ext $socioeco (l_`road' = l_hwy1947 l_rail1898 l_pix_pre1850) if `road'>0 & region_dmy3==1,  robust
-outreg2  l_`road' l_emp83 using "$route/tables/SOUTHIVB.xls", ctitle(`depvar') `instruct'    append
+*ivreg2  `depvar' l_emp83 $population  $geography   $geography_ext $socioeco (l_`road' = l_hwy1947 l_rail1898 l_pix_pre1850) if `road'>0 & region_dmy3==1,  robust
+*outreg2  l_`road' l_emp83 using "$route/tables/SOUTHIVB.xls", ctitle(`depvar') `instruct'    append
 
-ivreg2  `depvar' l_emp83 $population  $geography   $geography_ext $socioeco $cen_div (l_`road' = l_hwy1947 l_rail1898 l_pix_pre1850) if `road'>0 & region_dmy3==1,  robust
-outreg2  l_`road' l_emp83 using "$route/tables/SOUTHIVB.xls", ctitle(`depvar')  `instruct'    append
+*ivreg2  `depvar' l_emp83 $population  $geography   $geography_ext $socioeco $cen_div (l_`road' = l_hwy1947 l_rail1898 l_pix_pre1850) if `road'>0 & region_dmy3==1,  robust
+*outreg2  l_`road' l_emp83 using "$route/tables/SOUTHIVB.xls", ctitle(`depvar')  `instruct'    append
 
-ivreg2  `depvar' l_emp83 $population (l_road1980 = l_hwy1947 l_rail1898 l_pix_pre1850) if `road'>0 & region_dmy3==1,  robust
-outreg2  l_road1980 l_emp83 using "$route/tables/SOUTHIVB.xls", ctitle(`depvar')  `instruct'    append
+*ivreg2  `depvar' l_emp83 $population (l_road1980 = l_hwy1947 l_rail1898 l_pix_pre1850) if `road'>0 & region_dmy3==1,  robust
+*outreg2  l_road1980 l_emp83 using "$route/tables/SOUTHIVB.xls", ctitle(`depvar')  `instruct'    append
 
 
 *log close
@@ -568,29 +596,29 @@ local road "rd_km_IH_83"
 
 *keep if l_hwy1947>0
 
-ivreg2  `depvar' l_emp83 (l_`road' = l_hwy1947 l_rail1898 l_pix_pre1850) if `road'>0 & region_dmy1==1,  robust
-outreg2  l_`road' l_emp83 using "$route/tables/MIDWESTIVA.xls", ctitle(`depvar') `instruct'    replace
+*ivreg2  `depvar' l_emp83 (l_`road' = l_hwy1947 l_rail1898 l_pix_pre1850) if `road'>0 & region_dmy1==1,  robust
+*outreg2  l_`road' l_emp83 using "$route/tables/MIDWESTIVA.xls", ctitle(`depvar') `instruct'    replace
 
-ivreg2  `depvar' l_emp83 $population (l_`road' = l_hwy1947 l_rail1898 l_pix_pre1850) if `road'>0 & region_dmy1==1, robust
-outreg2  l_`road' l_emp83 using "$route/tables/MIDWESTIVA.xls", ctitle(`depvar') `instruct'    append
+*ivreg2  `depvar' l_emp83 $population (l_`road' = l_hwy1947 l_rail1898 l_pix_pre1850) if `road'>0 & region_dmy1==1, robust
+*outreg2  l_`road' l_emp83 using "$route/tables/MIDWESTIVA.xls", ctitle(`depvar') `instruct'    append
 
-ivreg2  `depvar' l_emp83 $population  $geography (l_`road' = l_hwy1947 l_rail1898 l_pix_pre1850) if `road'>0 & region_dmy1==1, robust
-outreg2  l_`road' l_emp83 using "$route/tables/MIDWESTIVA.xls", ctitle(`depvar') `instruct'    append
+*ivreg2  `depvar' l_emp83 $population  $geography (l_`road' = l_hwy1947 l_rail1898 l_pix_pre1850) if `road'>0 & region_dmy1==1, robust
+*outreg2  l_`road' l_emp83 using "$route/tables/MIDWESTIVA.xls", ctitle(`depvar') `instruct'    append
 
-ivreg2  `depvar' l_emp83 $population $geography   $geography_ext (l_`road' = l_hwy1947 l_rail1898 l_pix_pre1850) if `road'>0 & region_dmy1==1,  robust
-outreg2  l_`road' l_emp83 using "$route/tables/MIDWESTIVA.xls", ctitle(`depvar') `instruct'    append
+*ivreg2  `depvar' l_emp83 $population $geography   $geography_ext (l_`road' = l_hwy1947 l_rail1898 l_pix_pre1850) if `road'>0 & region_dmy1==1,  robust
+*outreg2  l_`road' l_emp83 using "$route/tables/MIDWESTIVA.xls", ctitle(`depvar') `instruct'    append
 
-ivreg2  `depvar' l_emp83 $population  $geography   $geography_ext $socioeco (l_`road' = l_hwy1947 l_rail1898 l_pix_pre1850) if `road'>0 & region_dmy1==1,  robust
-outreg2  l_`road' l_emp83 using "$route/tables/MIDWESTIVA.xls", ctitle(`depvar') `instruct'    append
+*ivreg2  `depvar' l_emp83 $population  $geography   $geography_ext $socioeco (l_`road' = l_hwy1947 l_rail1898 l_pix_pre1850) if `road'>0 & region_dmy1==1,  robust
+*outreg2  l_`road' l_emp83 using "$route/tables/MIDWESTIVA.xls", ctitle(`depvar') `instruct'    append
 
-ivreg2  `depvar' l_emp83 $population  $geography   $geography_ext $socioeco $cen_div  (l_`road' = l_hwy1947 l_rail1898 l_pix_pre1850) if `road'>0 & region_dmy1==1,  robust
-outreg2  l_`road' l_emp83 using "$route/tables/MIDWESTIVA.xls", ctitle(`depvar')  `instruct'    append
+*ivreg2  `depvar' l_emp83 $population  $geography   $geography_ext $socioeco $cen_div  (l_`road' = l_hwy1947 l_rail1898 l_pix_pre1850) if `road'>0 & region_dmy1==1,  robust
+*outreg2  l_`road' l_emp83 using "$route/tables/MIDWESTIVA.xls", ctitle(`depvar')  `instruct'    append
 
-ivreg2  `depvar' l_emp83 $population (l_road1980 = l_hwy1947 l_rail1898 l_pix_pre1850) if `road'>0 & region_dmy1==1,  robust
-outreg2  l_road1980 l_emp83 using "$route/tables/MIDWESTIVA.xls", ctitle(`depvar') `instruct'    append
+*ivreg2  `depvar' l_emp83 $population (l_road1980 = l_hwy1947 l_rail1898 l_pix_pre1850) if `road'>0 & region_dmy1==1,  robust
+*outreg2  l_road1980 l_emp83 using "$route/tables/MIDWESTIVA.xls", ctitle(`depvar') `instruct'    append
 
-ivreg2  Dl_pop00 l_emp83 $population (l_`road' = l_hwy1947 l_rail1898 l_pix_pre1850) if `road'>0 & region_dmy1==1,  robust
-outreg2  l_`road' l_emp83 using "$route/tables/MIDWESTIVA.xls", ctitle(Dl_pop00) `instruct'    append
+*ivreg2  Dl_pop00 l_emp83 $population (l_`road' = l_hwy1947 l_rail1898 l_pix_pre1850) if `road'>0 & region_dmy1==1,  robust
+*outreg2  l_`road' l_emp83 using "$route/tables/MIDWESTIVA.xls", ctitle(Dl_pop00) `instruct'    append
 
 *log close
 
@@ -604,26 +632,26 @@ local instruct "tex(pr) tdec(2) rdec(2) auto(2) symbol($^a$,$^b$,$^c$) se addsta
 local depvar "Dl_rd_km_IH_03"
 local road "rd_km_IH_83"
 
-ivreg2  `depvar'  l_emp83 (l_`road' = l_hwy1947 l_rail1898 l_pix_pre1850) if `road'>0 & region_dmy1==1,  robust
-outreg2  l_`road' l_emp83 using "$route/tables/MIDWESTIVB.xls", ctitle(`depvar') `instruct'    replace
+*ivreg2  `depvar'  l_emp83 (l_`road' = l_hwy1947 l_rail1898 l_pix_pre1850) if `road'>0 & region_dmy1==1,  robust
+*outreg2  l_`road' l_emp83 using "$route/tables/MIDWESTIVB.xls", ctitle(`depvar') `instruct'    replace
 
-ivreg2  `depvar' l_emp83 $population (l_`road' = l_hwy1947 l_rail1898 l_pix_pre1850) if `road'>0 & region_dmy1==1,  robust
-outreg2  l_`road' l_emp83 using "$route/tables/MIDWESTIVB.xls", ctitle(`depvar') `instruct'    append
+*ivreg2  `depvar' l_emp83 $population (l_`road' = l_hwy1947 l_rail1898 l_pix_pre1850) if `road'>0 & region_dmy1==1,  robust
+*outreg2  l_`road' l_emp83 using "$route/tables/MIDWESTIVB.xls", ctitle(`depvar') `instruct'    append
 
-ivreg2  `depvar' l_emp83 $population $geography (l_`road' = l_hwy1947 l_rail1898 l_pix_pre1850) if `road'>0 & region_dmy1==1,  robust
-outreg2  l_`road' l_emp83 using "$route/tables/MIDWESTIVB.xls", ctitle(`depvar') `instruct'    append
+*ivreg2  `depvar' l_emp83 $population $geography (l_`road' = l_hwy1947 l_rail1898 l_pix_pre1850) if `road'>0 & region_dmy1==1,  robust
+*outreg2  l_`road' l_emp83 using "$route/tables/MIDWESTIVB.xls", ctitle(`depvar') `instruct'    append
 
-ivreg2  `depvar' l_emp83 $population $geography $geography_ext  (l_`road' = l_hwy1947 l_rail1898 l_pix_pre1850) if `road'>0 & region_dmy1==1,  robust
-outreg2  l_`road' l_emp83 using "$route/tables/MIDWESTIVB.xls", ctitle(`depvar') `instruct'    append
+*ivreg2  `depvar' l_emp83 $population $geography $geography_ext  (l_`road' = l_hwy1947 l_rail1898 l_pix_pre1850) if `road'>0 & region_dmy1==1,  robust
+*outreg2  l_`road' l_emp83 using "$route/tables/MIDWESTIVB.xls", ctitle(`depvar') `instruct'    append
 
-ivreg2  `depvar' l_emp83 $population  $geography   $geography_ext $socioeco (l_`road' = l_hwy1947 l_rail1898 l_pix_pre1850) if `road'>0 & region_dmy1==1,  robust
-outreg2  l_`road' l_emp83 using "$route/tables/MIDWESTIVB.xls", ctitle(`depvar') `instruct'    append
+*ivreg2  `depvar' l_emp83 $population  $geography   $geography_ext $socioeco (l_`road' = l_hwy1947 l_rail1898 l_pix_pre1850) if `road'>0 & region_dmy1==1,  robust
+*outreg2  l_`road' l_emp83 using "$route/tables/MIDWESTIVB.xls", ctitle(`depvar') `instruct'    append
 
-ivreg2  `depvar' l_emp83 $population  $geography   $geography_ext $socioeco $cen_div (l_`road' = l_hwy1947 l_rail1898 l_pix_pre1850) if `road'>0 & region_dmy1==1,  robust
-outreg2  l_`road' l_emp83 using "$route/tables/MIDWESTIVB.xls", ctitle(`depvar')  `instruct'    append
+*ivreg2  `depvar' l_emp83 $population  $geography   $geography_ext $socioeco $cen_div (l_`road' = l_hwy1947 l_rail1898 l_pix_pre1850) if `road'>0 & region_dmy1==1,  robust
+*outreg2  l_`road' l_emp83 using "$route/tables/MIDWESTIVB.xls", ctitle(`depvar')  `instruct'    append
 
-ivreg2  `depvar' l_emp83 $population (l_road1980 = l_hwy1947 l_rail1898 l_pix_pre1850) if `road'>0 & region_dmy1==1,  robust
-outreg2  l_road1980 l_emp83 using "$route/tables/MIDWESTIVB.xls", ctitle(`depvar')  `instruct'    append
+*ivreg2  `depvar' l_emp83 $population (l_road1980 = l_hwy1947 l_rail1898 l_pix_pre1850) if `road'>0 & region_dmy1==1,  robust
+*outreg2  l_road1980 l_emp83 using "$route/tables/MIDWESTIVB.xls", ctitle(`depvar')  `instruct'    append
 
 
 *log close
@@ -647,29 +675,29 @@ local road "rd_km_IH_83"
 
 *keep if l_hwy1947>0
 
-ivreg2  `depvar' l_emp83 (l_`road' = l_hwy1947 l_rail1898 l_pix_pre1850) if `road'>0 & region_dmy2==1,  robust
-outreg2  l_`road' l_emp83 using "$route/tables/NEIVA.xls", ctitle(`depvar') `instruct'    replace
+*ivreg2  `depvar' l_emp83 (l_`road' = l_hwy1947 l_rail1898 l_pix_pre1850) if `road'>0 & region_dmy2==1,  robust
+*outreg2  l_`road' l_emp83 using "$route/tables/NEIVA.xls", ctitle(`depvar') `instruct'    replace
 
-ivreg2  `depvar' l_emp83 $population (l_`road' = l_hwy1947 l_rail1898 l_pix_pre1850) if `road'>0 & region_dmy2==1, robust
-outreg2  l_`road' l_emp83 using "$route/tables/NEIVA.xls", ctitle(`depvar') `instruct'    append
+*ivreg2  `depvar' l_emp83 $population (l_`road' = l_hwy1947 l_rail1898 l_pix_pre1850) if `road'>0 & region_dmy2==1, robust
+*outreg2  l_`road' l_emp83 using "$route/tables/NEIVA.xls", ctitle(`depvar') `instruct'    append
 
-ivreg2  `depvar' l_emp83 $population  $geography (l_`road' = l_hwy1947 l_rail1898 l_pix_pre1850) if `road'>0 & region_dmy2==1, robust
-outreg2  l_`road' l_emp83 using "$route/tables/NEIVA.xls", ctitle(`depvar') `instruct'    append
+*ivreg2  `depvar' l_emp83 $population  $geography (l_`road' = l_hwy1947 l_rail1898 l_pix_pre1850) if `road'>0 & region_dmy2==1, robust
+*outreg2  l_`road' l_emp83 using "$route/tables/NEIVA.xls", ctitle(`depvar') `instruct'    append
 
-ivreg2  `depvar' l_emp83 $population $geography   $geography_ext (l_`road' = l_hwy1947 l_rail1898 l_pix_pre1850) if `road'>0 & region_dmy2==1,  robust
-outreg2  l_`road' l_emp83 using "$route/tables/NEIVA.xls", ctitle(`depvar') `instruct'    append
+*ivreg2  `depvar' l_emp83 $population $geography   $geography_ext (l_`road' = l_hwy1947 l_rail1898 l_pix_pre1850) if `road'>0 & region_dmy2==1,  robust
+*outreg2  l_`road' l_emp83 using "$route/tables/NEIVA.xls", ctitle(`depvar') `instruct'    append
 
-ivreg2  `depvar' l_emp83 $population  $geography   $geography_ext $socioeco (l_`road' = l_hwy1947 l_rail1898 l_pix_pre1850) if `road'>0 & region_dmy2==1,  robust
-outreg2  l_`road' l_emp83 using "$route/tables/NEIVA.xls", ctitle(`depvar') `instruct'    append
+*ivreg2  `depvar' l_emp83 $population  $geography   $geography_ext $socioeco (l_`road' = l_hwy1947 l_rail1898 l_pix_pre1850) if `road'>0 & region_dmy2==1,  robust
+*outreg2  l_`road' l_emp83 using "$route/tables/NEIVA.xls", ctitle(`depvar') `instruct'    append
 
-ivreg2  `depvar' l_emp83 $population  $geography   $geography_ext $socioeco $cen_div  (l_`road' = l_hwy1947 l_rail1898 l_pix_pre1850) if `road'>0 & region_dmy2==1,  robust
-outreg2  l_`road' l_emp83 using "$route/tables/NEIVA.xls", ctitle(`depvar')  `instruct'    append
+*ivreg2  `depvar' l_emp83 $population  $geography   $geography_ext $socioeco $cen_div  (l_`road' = l_hwy1947 l_rail1898 l_pix_pre1850) if `road'>0 & region_dmy2==1,  robust
+*outreg2  l_`road' l_emp83 using "$route/tables/NEIVA.xls", ctitle(`depvar')  `instruct'    append
 
-ivreg2  `depvar' l_emp83 $population (l_road1980 = l_hwy1947 l_rail1898 l_pix_pre1850) if `road'>0 & region_dmy2==1,  robust
-outreg2  l_road1980 l_emp83 using "$route/tables/NEIVA.xls", ctitle(`depvar') `instruct'    append
+*ivreg2  `depvar' l_emp83 $population (l_road1980 = l_hwy1947 l_rail1898 l_pix_pre1850) if `road'>0 & region_dmy2==1,  robust
+*outreg2  l_road1980 l_emp83 using "$route/tables/NEIVA.xls", ctitle(`depvar') `instruct'    append
 
-ivreg2  Dl_pop00 l_emp83 $population (l_`road' = l_hwy1947 l_rail1898 l_pix_pre1850) if `road'>0 & region_dmy2==1,  robust
-outreg2  l_`road' l_emp83 using "$route/tables/NEIVA.xls", ctitle(Dl_pop00) `instruct'    append
+*ivreg2  Dl_pop00 l_emp83 $population (l_`road' = l_hwy1947 l_rail1898 l_pix_pre1850) if `road'>0 & region_dmy2==1,  robust
+*outreg2  l_`road' l_emp83 using "$route/tables/NEIVA.xls", ctitle(Dl_pop00) `instruct'    append
 
 *log close
 
@@ -683,26 +711,26 @@ local instruct "tex(pr) tdec(2) rdec(2) auto(2) symbol($^a$,$^b$,$^c$) se addsta
 local depvar "Dl_rd_km_IH_03"
 local road "rd_km_IH_83"
 
-ivreg2  `depvar'  l_emp83 (l_`road' = l_hwy1947 l_rail1898 l_pix_pre1850) if `road'>0 & region_dmy2==1,  robust
-outreg2  l_`road' l_emp83 using "$route/tables/NEIVB.xls", ctitle(`depvar') `instruct'    replace
+*ivreg2  `depvar'  l_emp83 (l_`road' = l_hwy1947 l_rail1898 l_pix_pre1850) if `road'>0 & region_dmy2==1,  robust
+*outreg2  l_`road' l_emp83 using "$route/tables/NEIVB.xls", ctitle(`depvar') `instruct'    replace
 
-ivreg2  `depvar' l_emp83 $population (l_`road' = l_hwy1947 l_rail1898 l_pix_pre1850) if `road'>0 & region_dmy2==1,  robust
-outreg2  l_`road' l_emp83 using "$route/tables/NEIVB.xls", ctitle(`depvar') `instruct'    append
+*ivreg2  `depvar' l_emp83 $population (l_`road' = l_hwy1947 l_rail1898 l_pix_pre1850) if `road'>0 & region_dmy2==1,  robust
+*outreg2  l_`road' l_emp83 using "$route/tables/NEIVB.xls", ctitle(`depvar') `instruct'    append
 
-ivreg2  `depvar' l_emp83 $population $geography (l_`road' = l_hwy1947 l_rail1898 l_pix_pre1850) if `road'>0 & region_dmy2==1,  robust
-outreg2  l_`road' l_emp83 using "$route/tables/NEIVB.xls", ctitle(`depvar') `instruct'    append
+*ivreg2  `depvar' l_emp83 $population $geography (l_`road' = l_hwy1947 l_rail1898 l_pix_pre1850) if `road'>0 & region_dmy2==1,  robust
+*outreg2  l_`road' l_emp83 using "$route/tables/NEIVB.xls", ctitle(`depvar') `instruct'    append
 
-ivreg2  `depvar' l_emp83 $population $geography $geography_ext  (l_`road' = l_hwy1947 l_rail1898 l_pix_pre1850) if `road'>0 & region_dmy2==1,  robust
-outreg2  l_`road' l_emp83 using "$route/tables/NEIVB.xls", ctitle(`depvar') `instruct'    append
+*ivreg2  `depvar' l_emp83 $population $geography $geography_ext  (l_`road' = l_hwy1947 l_rail1898 l_pix_pre1850) if `road'>0 & region_dmy2==1,  robust
+*outreg2  l_`road' l_emp83 using "$route/tables/NEIVB.xls", ctitle(`depvar') `instruct'    append
 
-ivreg2  `depvar' l_emp83 $population  $geography   $geography_ext $socioeco (l_`road' = l_hwy1947 l_rail1898 l_pix_pre1850) if `road'>0 & region_dmy2==1,  robust
-outreg2  l_`road' l_emp83 using "$route/tables/NEIVB.xls", ctitle(`depvar') `instruct'    append
+*ivreg2  `depvar' l_emp83 $population  $geography   $geography_ext $socioeco (l_`road' = l_hwy1947 l_rail1898 l_pix_pre1850) if `road'>0 & region_dmy2==1,  robust
+*outreg2  l_`road' l_emp83 using "$route/tables/NEIVB.xls", ctitle(`depvar') `instruct'    append
 
-ivreg2  `depvar' l_emp83 $population  $geography   $geography_ext $socioeco $cen_div (l_`road' = l_hwy1947 l_rail1898 l_pix_pre1850) if `road'>0 & region_dmy2==1,  robust
-outreg2  l_`road' l_emp83 using "$route/tables/NEIVB.xls", ctitle(`depvar')  `instruct'    append
+*ivreg2  `depvar' l_emp83 $population  $geography   $geography_ext $socioeco $cen_div (l_`road' = l_hwy1947 l_rail1898 l_pix_pre1850) if `road'>0 & region_dmy2==1,  robust
+*outreg2  l_`road' l_emp83 using "$route/tables/NEIVB.xls", ctitle(`depvar')  `instruct'    append
 
-ivreg2  `depvar' l_emp83 $population (l_road1980 = l_hwy1947 l_rail1898 l_pix_pre1850) if `road'>0 & region_dmy2==1,  robust
-outreg2  l_road1980 l_emp83 using "$route/tables/NEIVB.xls", ctitle(`depvar')  `instruct'    append
+*ivreg2  `depvar' l_emp83 $population (l_road1980 = l_hwy1947 l_rail1898 l_pix_pre1850) if `road'>0 & region_dmy2==1,  robust
+*outreg2  l_road1980 l_emp83 using "$route/tables/NEIVB.xls", ctitle(`depvar')  `instruct'    append
 
 
 *log close
@@ -725,29 +753,29 @@ local road "rd_km_IH_83"
 
 *keep if l_hwy1947>0
 
-ivreg2  `depvar' l_emp83 (l_`road' = l_hwy1947 l_rail1898 l_pix_pre1850) if `road'>0 & region_dmy4==1,  robust
-outreg2  l_`road' l_emp83 using "$route/tables/WESTIVA.xls", ctitle(`depvar') `instruct'    replace
+*ivreg2  `depvar' l_emp83 (l_`road' = l_hwy1947 l_rail1898 l_pix_pre1850) if `road'>0 & region_dmy4==1,  robust
+*outreg2  l_`road' l_emp83 using "$route/tables/WESTIVA.xls", ctitle(`depvar') `instruct'    replace
 
-ivreg2  `depvar' l_emp83 $population (l_`road' = l_hwy1947 l_rail1898 l_pix_pre1850) if `road'>0 & region_dmy4==1, robust
-outreg2  l_`road' l_emp83 using "$route/tables/WESTIVA.xls", ctitle(`depvar') `instruct'    append
+*ivreg2  `depvar' l_emp83 $population (l_`road' = l_hwy1947 l_rail1898 l_pix_pre1850) if `road'>0 & region_dmy4==1, robust
+*outreg2  l_`road' l_emp83 using "$route/tables/WESTIVA.xls", ctitle(`depvar') `instruct'    append
 
-ivreg2  `depvar' l_emp83 $population  $geography (l_`road' = l_hwy1947 l_rail1898 l_pix_pre1850) if `road'>0 & region_dmy4==1, robust
-outreg2  l_`road' l_emp83 using "$route/tables/WESTIVA.xls", ctitle(`depvar') `instruct'    append
+*ivreg2  `depvar' l_emp83 $population  $geography (l_`road' = l_hwy1947 l_rail1898 l_pix_pre1850) if `road'>0 & region_dmy4==1, robust
+*outreg2  l_`road' l_emp83 using "$route/tables/WESTIVA.xls", ctitle(`depvar') `instruct'    append
 
-ivreg2  `depvar' l_emp83 $population $geography   $geography_ext (l_`road' = l_hwy1947 l_rail1898 l_pix_pre1850) if `road'>0 & region_dmy4==1,  robust
-outreg2  l_`road' l_emp83 using "$route/tables/WESTIVA.xls", ctitle(`depvar') `instruct'    append
+*ivreg2  `depvar' l_emp83 $population $geography   $geography_ext (l_`road' = l_hwy1947 l_rail1898 l_pix_pre1850) if `road'>0 & region_dmy4==1,  robust
+*outreg2  l_`road' l_emp83 using "$route/tables/WESTIVA.xls", ctitle(`depvar') `instruct'    append
 
-ivreg2  `depvar' l_emp83 $population  $geography   $geography_ext $socioeco (l_`road' = l_hwy1947 l_rail1898 l_pix_pre1850) if `road'>0 & region_dmy4==1,  robust
-outreg2  l_`road' l_emp83 using "$route/tables/WESTIVA.xls", ctitle(`depvar') `instruct'    append
+*ivreg2  `depvar' l_emp83 $population  $geography   $geography_ext $socioeco (l_`road' = l_hwy1947 l_rail1898 l_pix_pre1850) if `road'>0 & region_dmy4==1,  robust
+*outreg2  l_`road' l_emp83 using "$route/tables/WESTIVA.xls", ctitle(`depvar') `instruct'    append
 
-ivreg2  `depvar' l_emp83 $population  $geography   $geography_ext $socioeco $cen_div  (l_`road' = l_hwy1947 l_rail1898 l_pix_pre1850) if `road'>0 & region_dmy4==1,  robust
-outreg2  l_`road' l_emp83 using "$route/tables/WESTIVA.xls", ctitle(`depvar')  `instruct'    append
+*ivreg2  `depvar' l_emp83 $population  $geography   $geography_ext $socioeco $cen_div  (l_`road' = l_hwy1947 l_rail1898 l_pix_pre1850) if `road'>0 & region_dmy4==1,  robust
+*outreg2  l_`road' l_emp83 using "$route/tables/WESTIVA.xls", ctitle(`depvar')  `instruct'    append
 
-ivreg2  `depvar' l_emp83 $population (l_road1980 = l_hwy1947 l_rail1898 l_pix_pre1850) if `road'>0 & region_dmy4==1,  robust
-outreg2  l_road1980 l_emp83 using "$route/tables/WESTIVA.xls", ctitle(`depvar') `instruct'    append
+*ivreg2  `depvar' l_emp83 $population (l_road1980 = l_hwy1947 l_rail1898 l_pix_pre1850) if `road'>0 & region_dmy4==1,  robust
+*outreg2  l_road1980 l_emp83 using "$route/tables/WESTIVA.xls", ctitle(`depvar') `instruct'    append
 
-ivreg2  Dl_pop00 l_emp83 $population (l_`road' = l_hwy1947 l_rail1898 l_pix_pre1850) if `road'>0 & region_dmy4==1,  robust
-outreg2  l_`road' l_emp83 using "$route/tables/WESTIVA.xls", ctitle(Dl_pop00) `instruct'    append
+*ivreg2  Dl_pop00 l_emp83 $population (l_`road' = l_hwy1947 l_rail1898 l_pix_pre1850) if `road'>0 & region_dmy4==1,  robust
+*outreg2  l_`road' l_emp83 using "$route/tables/WESTIVA.xls", ctitle(Dl_pop00) `instruct'    append
 
 *log close
 
@@ -761,30 +789,100 @@ local instruct "tex(pr) tdec(2) rdec(2) auto(2) symbol($^a$,$^b$,$^c$) se addsta
 local depvar "Dl_rd_km_IH_03"
 local road "rd_km_IH_83"
 
-ivreg2  `depvar'  l_emp83 (l_`road' = l_hwy1947 l_rail1898 l_pix_pre1850) if `road'>0 & region_dmy4==1,  robust
-outreg2  l_`road' l_emp83 using "$route/tables/WESTIVB.xls", ctitle(`depvar') `instruct'    replace
+*ivreg2  `depvar'  l_emp83 (l_`road' = l_hwy1947 l_rail1898 l_pix_pre1850) if `road'>0 & region_dmy4==1,  robust
+*outreg2  l_`road' l_emp83 using "$route/tables/WESTIVB.xls", ctitle(`depvar') `instruct'    replace
 
-ivreg2  `depvar' l_emp83 $population (l_`road' = l_hwy1947 l_rail1898 l_pix_pre1850) if `road'>0 & region_dmy4==1,  robust
-outreg2  l_`road' l_emp83 using "$route/tables/WESTIVB.xls", ctitle(`depvar') `instruct'    append
+*ivreg2  `depvar' l_emp83 $population (l_`road' = l_hwy1947 l_rail1898 l_pix_pre1850) if `road'>0 & region_dmy4==1,  robust
+*outreg2  l_`road' l_emp83 using "$route/tables/WESTIVB.xls", ctitle(`depvar') `instruct'    append
 
-ivreg2  `depvar' l_emp83 $population $geography (l_`road' = l_hwy1947 l_rail1898 l_pix_pre1850) if `road'>0 & region_dmy4==1,  robust
-outreg2  l_`road' l_emp83 using "$route/tables/WESTIVB.xls", ctitle(`depvar') `instruct'    append
+*ivreg2  `depvar' l_emp83 $population $geography (l_`road' = l_hwy1947 l_rail1898 l_pix_pre1850) if `road'>0 & region_dmy4==1,  robust
+*outreg2  l_`road' l_emp83 using "$route/tables/WESTIVB.xls", ctitle(`depvar') `instruct'    append
 
-ivreg2  `depvar' l_emp83 $population $geography $geography_ext  (l_`road' = l_hwy1947 l_rail1898 l_pix_pre1850) if `road'>0 & region_dmy4==1,  robust
-outreg2  l_`road' l_emp83 using "$route/tables/WESTIVB.xls", ctitle(`depvar') `instruct'    append
+*ivreg2  `depvar' l_emp83 $population $geography $geography_ext  (l_`road' = l_hwy1947 l_rail1898 l_pix_pre1850) if `road'>0 & region_dmy4==1,  robust
+*outreg2  l_`road' l_emp83 using "$route/tables/WESTIVB.xls", ctitle(`depvar') `instruct'    append
 
-ivreg2  `depvar' l_emp83 $population  $geography   $geography_ext $socioeco (l_`road' = l_hwy1947 l_rail1898 l_pix_pre1850) if `road'>0 & region_dmy4==1,  robust
-outreg2  l_`road' l_emp83 using "$route/tables/WESTIVB.xls", ctitle(`depvar') `instruct'    append
+*ivreg2  `depvar' l_emp83 $population  $geography   $geography_ext $socioeco (l_`road' = l_hwy1947 l_rail1898 l_pix_pre1850) if `road'>0 & region_dmy4==1,  robust
+*outreg2  l_`road' l_emp83 using "$route/tables/WESTIVB.xls", ctitle(`depvar') `instruct'    append
 
-ivreg2  `depvar' l_emp83 $population  $geography   $geography_ext $socioeco $cen_div (l_`road' = l_hwy1947 l_rail1898 l_pix_pre1850) if `road'>0 & region_dmy4==1,  robust
-outreg2  l_`road' l_emp83 using "$route/tables/WESTIVB.xls", ctitle(`depvar')  `instruct'    append
+*ivreg2  `depvar' l_emp83 $population  $geography   $geography_ext $socioeco $cen_div (l_`road' = l_hwy1947 l_rail1898 l_pix_pre1850) if `road'>0 & region_dmy4==1,  robust
+*outreg2  l_`road' l_emp83 using "$route/tables/WESTIVB.xls", ctitle(`depvar')  `instruct'    append
 
-ivreg2  `depvar' l_emp83 $population (l_road1980 = l_hwy1947 l_rail1898 l_pix_pre1850) if `road'>0 & region_dmy4==1,  robust
-outreg2  l_road1980 l_emp83 using "$route/tables/WESTIVB.xls", ctitle(`depvar')  `instruct'    append
+*ivreg2  `depvar' l_emp83 $population (l_road1980 = l_hwy1947 l_rail1898 l_pix_pre1850) if `road'>0 & region_dmy4==1,  robust
+*outreg2  l_road1980 l_emp83 using "$route/tables/WESTIVB.xls", ctitle(`depvar')  `instruct'    append
 
 
 *log close
 
 }
+
+********************************************************************************
+************************* USE ESTOUT FOR THE EXTENSION *************************
+********************************************************************************
+******** Employment
+eststo clear
+
+*quietly log using new_tables/table4a, text replace
+
+local instruct "tex(pr) tdec(2) rdec(2) auto(2) symbol($^a$,$^b$,$^c$) se addstat(Overid,e(jp),First stage F, e(widstat))" 
+
+local depvar "Dl_emp03"
+local road "rd_km_IH_83"
+
+
+***SOUTH
+ivreg2  `depvar' l_emp83 $population (l_`road' = l_hwy1947 l_rail1898 l_pix_pre1850) if `road'>0 & region_dmy3==1, robust
+eststo Southemp
+
+***Midwest
+ivreg2  `depvar' l_emp83 $population (l_`road' = l_hwy1947 l_rail1898 l_pix_pre1850) if `road'>0 & region_dmy1==1, robust
+eststo MWemp
+
+***Northeast
+ivreg2  `depvar' l_emp83 $population (l_`road' = l_hwy1947 l_rail1898 l_pix_pre1850) if `road'>0 & region_dmy2==1, robust
+eststo NEemp
+
+***West
+ivreg2  `depvar' l_emp83 $population (l_`road' = l_hwy1947 l_rail1898 l_pix_pre1850) if `road'>0 & region_dmy4==1, robust
+eststo Westemp
+
+esttab Southemp MWemp NEemp Westemp using "$route/tables/Employmentextension.tex", replace keep (l_rd_km_IH_83 l_emp83) label star(* 0.10 ** 0.05 *** 0.01) r2 nonumber
+
+
+******** Road Growth
+eststo clear
+local instruct "tex(pr) tdec(2) rdec(2) auto(2) symbol($^a$,$^b$,$^c$) se addstat(Overid,e(jp),First stage F, e(widstat))" 
+local depvar "Dl_rd_km_IH_03"
+local road "rd_km_IH_83"
+
+***SOUTH
+ivreg2  `depvar' l_emp83 $population  $geography (l_`road' = l_hwy1947 l_rail1898 l_pix_pre1850) if `road'>0 & region_dmy3==1, robust
+eststo Southroad
+
+***Midwest
+ivreg2  `depvar' l_emp83 $population  $geography (l_`road' = l_hwy1947 l_rail1898 l_pix_pre1850) if `road'>0 & region_dmy1==1, robust
+eststo MWroad
+
+***Northeast
+ivreg2  `depvar' l_emp83 $population $geography (l_`road' = l_hwy1947 l_rail1898 l_pix_pre1850) if `road'>0 & region_dmy2==1, robust
+eststo NEroad
+
+***West
+ivreg2  `depvar' l_emp83 $population $geography (l_`road' = l_hwy1947 l_rail1898 l_pix_pre1850) if `road'>0 & region_dmy4==1, robust
+eststo Westroad
+
+esttab Southroad MWroad NEroad Westroad using "$route/tables/Employmentextension.tex", replace keep (l_rd_km_IH_83 l_emp83) label star(* 0.10 ** 0.05 *** 0.01) r2 nonumber
+
+***SUMMARIZE MIDWEST CITIES
+sum pop80
+sum pop80 if region_dmy1==1
+
+
+
+
+
+
+
+
+
 
 
